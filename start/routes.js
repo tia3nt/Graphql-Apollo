@@ -21,3 +21,5 @@ Route.get('/', () => {
 })
 
 Route.post('/login', 'UserController.login').middleware(['graph'])
+Route.get('/user/:id', 'UserController.byID').middleware(['graph'])
+

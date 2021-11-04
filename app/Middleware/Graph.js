@@ -4,6 +4,7 @@ const { ApolloServer } = require('apollo-server')
 const { gql } = require('apollo-server-core')
 
 const fs = require('fs')
+const { IncomingMessage } = require('http')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -16,6 +17,8 @@ class Graph {
    * @param {Function} next
    */
   async handle ({ request }, next) {
+    const methode = request.method
+    request.method = 'POST'
     const typeDefs = gql(fs.readFileSync('graph/schema.graphql', { encoding: 'utf8' }))
     const resolvers = require('../../graph/resolver')
     const graphServer = new ApolloServer(
@@ -24,10 +27,12 @@ class Graph {
         resolvers
       }
     )    
-    request.result = await graphServer.executeOperation({
+      request.result = await graphServer.executeOperation({
       query: request.body.query,
-      variables: request.body.variables
+      variables: request.params
     })
+  
+    request.method = methode
     next()
   }
 }

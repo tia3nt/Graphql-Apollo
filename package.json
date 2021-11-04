@@ -30,5 +30,8 @@
   },
   "autoload": {
     "App": "./app"
+  },
+  "devDependencies": {
+    "notarealdb": "^0.2.2"
   }
 }
