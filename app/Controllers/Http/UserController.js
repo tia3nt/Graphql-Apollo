@@ -25,6 +25,15 @@ class UserController {
             user: `${user.username} ${message}`
         }
     }
+    async deleteID ({ request }) {
+        let message = ''
+        const user = request.result.data.deleteUser
+        !user ? message = 'no user deleted' : message = 'is deleted'
+
+        return {
+            user: `${user.username} ${message}`
+        }
+    }
 }
 
 module.exports = UserController

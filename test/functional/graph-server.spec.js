@@ -83,3 +83,30 @@ test('graphql should create new user', async ({ client}) => {
       user: 'Yanti is created'
     })
 })
+
+test('graphql should delete specific user', async ({ client }) => {
+  const response = await client
+    .post('/delete/user/2')
+    .header({
+      'content-type': 'application/json'
+    })
+    .send(JSON.stringify({
+      query: `
+        mutation MutationDeleteUser(
+          $id: String
+          ) {
+          deleteUser(
+            id: $id
+            ) {
+             username
+             email
+            }
+        }
+      `}))
+    .end()
+
+  response.assertStatus(200)
+  response.assertJSONSubset({
+      user: "Yanti is deleted"
+  })
+})

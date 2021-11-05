@@ -16,7 +16,7 @@ const Query = {
 }
 
 const Mutation = {
-    createUser: (root, { input } ) => {
+    createUser: (root, { input }) => {
         db.users.create({
             id: input.id,
             username: input.username,
@@ -25,6 +25,13 @@ const Mutation = {
         })
        
         return db.users.get(input.id)
+    },
+
+    deleteUser: (root, { id }) => {
+        let toDelete = db.users.get(id)
+        db.users.delete(id)
+        
+        return toDelete
     }
 }
 module.exports = { Query, Mutation }

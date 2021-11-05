@@ -23,4 +23,4 @@ Route.get('/', () => {
 Route.post('/login', 'UserController.login').middleware(['graph'])
 Route.get('/user/:id', 'UserController.byID').middleware(['graph'])
 Route.post('/signup', 'UserController.store').middleware(['graph'])
-
+Route.post('/delete/user/:id', 'UserController.deleteID').middleware(['graph'])
