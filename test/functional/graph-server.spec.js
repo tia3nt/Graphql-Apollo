@@ -25,9 +25,8 @@ test('make sure graphql server running when /login is posted', async ({ client }
 })
 
 test('graph Server should return specific user information', async ({ client }) => {
-  const id = 1
   const response = await client
-    .get(`/user/${ id }`)
+    .get('/user/1')
     .header({
       'content-type': 'application/json'
     })
@@ -42,10 +41,49 @@ test('graph Server should return specific user information', async ({ client }) 
     }))
     .end()
     
-  console.log('error', response.error)
   response.assertStatus(200)
   response.assertJSONSubset({
       username: testUser[0].username,
       email: testUser[0].email 
   })
+})
+
+test('graphql should create new user', async ({ client}) => {
+  const response = await client
+    .post('/signup')
+    .header({
+      'content-type': 'application/json'
+    })
+    .send(JSON.stringify({
+      query: `
+        mutation MutationCreateUser(
+          $id: String, 
+          $username: String!,
+          $email: String!,
+          $password: String!
+          ) {
+          createUser(
+            id: $id,
+            username: $username,
+            email: $email,
+            password: $password
+            ){
+            username
+            email
+          }
+        }
+      `,
+      variables: {
+        id: "2",
+        username: "Yanti",
+        email: "yanti@mail.com",
+        password: "yanti123"
+      }
+    }))
+    .end()
+
+    response.assertStatus(200)
+    response.assertJSONSubset({
+      user: 'Yanti is created'
+    })
 })

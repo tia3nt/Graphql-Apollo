@@ -4,8 +4,22 @@ type Query {
   users: [User]
 }
 type User {
-    id: String!
-    username: String
-    email: String
-    Password: String
+  id: String
+  username: String!
+  email: String!
+  password: String!
+}
+input inputUser {
+  id: String
+  username: String!
+  email: String!
+  password: String!
+}
+type Mutation {
+  createUser(
+    id: String
+    username: String!
+    email: String!
+    password: String!
+  ): User
 }

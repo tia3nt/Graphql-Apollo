@@ -21,17 +21,24 @@ class Graph {
     request.method = 'POST'
     const typeDefs = gql(fs.readFileSync('graph/schema.graphql', { encoding: 'utf8' }))
     const resolvers = require('../../graph/resolver')
+    
     const graphServer = new ApolloServer(
       {
         typeDefs,
         resolvers
       }
     )    
+    
+    let variables = request.body.variables
+    !variables
+    ? variables = request.params
+    : variables = request.body.variables
+
       request.result = await graphServer.executeOperation({
       query: request.body.query,
-      variables: request.params
+      variables: variables
     })
-  
+    
     request.method = methode
     next()
   }

@@ -1,15 +1,31 @@
 'use strict'
 
+const { responsePathAsArray } = require('graphql')
 const db = require('../db')
 
 const Query = {
     users : () => db.users.list(),
 
-    user : (root, args) => {
-        console.log('resolve2', args.id)
-       return db.users.get(args.id)
+    user : (root, { id }) => {
+        return db.users.get(id)
     },
 
-    server : () => `Graphql Server running successfully`
+    server : () => {
+        return `Graphql Server running successfully`
+    },
 }
-module.exports = { Query }
+
+const Mutation = {
+    createUser: (root, { id, username, email, password }) => {
+        
+        db.users.create({
+            id: id,
+            username: username,
+            email: email,
+            password: password
+        })
+
+        return db.users.get(id)
+    }
+}
+module.exports = { Query, Mutation }
