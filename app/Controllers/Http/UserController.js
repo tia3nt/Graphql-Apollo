@@ -34,6 +34,15 @@ class UserController {
             user: `${user.username} ${message}`
         }
     }
+    async updateID ({ request }) {
+        let message = ''
+        const user = request.result.data.updateUser
+
+        !user ? message = 'no data updated' : message = 'has updated'
+        return {
+            user: `${user.id} ${message}`
+        }
+    }
 }
 
 module.exports = UserController

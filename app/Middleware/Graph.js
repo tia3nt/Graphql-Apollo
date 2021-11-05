@@ -29,11 +29,8 @@ class Graph {
       }
     )    
     
-    let variables = request.body.variables
-    !variables
-    ? variables = request.params
-    : variables = request.body.variables
-
+    let variables = {...request.body.variables, ...request.params}
+    
       request.result = await graphServer.executeOperation({
       query: request.body.query,
       variables: variables

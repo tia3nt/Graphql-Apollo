@@ -32,6 +32,24 @@ const Mutation = {
         db.users.delete(id)
         
         return toDelete
+    },
+
+    updateUser: (root, { input, id }) => {
+
+        let toEdit = db.users.get(id)
+        let data = {}
+        !input.username ? data.username = toEdit.username : data.username = input.username
+        !input.email ? data.email = toEdit.email : data.email = input.email
+        !input.password ? data.password = toEdit.password : data.password = input.password
+
+        db.users.update({
+            id: id,
+            username: data.username,
+            email: data.email,
+            password: data.password
+        })
+    
+        return db.users.get(id)
     }
 }
 module.exports = { Query, Mutation }

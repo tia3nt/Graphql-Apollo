@@ -15,11 +15,19 @@ input inputUser {
   email: String!
   password: String!
 }
+input updateUser {
+  email: String
+  password: String
+}
 type Mutation {
   createUser(
     input: inputUser
   ): User
   deleteUser(
+    id: String
+  ): User
+  updateUser(
+    input: updateUser
     id: String
   ): User
 }
