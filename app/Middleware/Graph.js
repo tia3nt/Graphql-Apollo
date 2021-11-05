@@ -38,7 +38,7 @@ class Graph {
       query: request.body.query,
       variables: variables
     })
-    
+  
     request.method = methode
     next()
   }

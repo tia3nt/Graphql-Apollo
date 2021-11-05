@@ -57,16 +57,10 @@ test('graphql should create new user', async ({ client}) => {
     .send(JSON.stringify({
       query: `
         mutation MutationCreateUser(
-          $id: String, 
-          $username: String!,
-          $email: String!,
-          $password: String!
+          $inputUser: inputUser
           ) {
           createUser(
-            id: $id,
-            username: $username,
-            email: $email,
-            password: $password
+            input: $inputUser
             ){
             username
             email
@@ -74,10 +68,12 @@ test('graphql should create new user', async ({ client}) => {
         }
       `,
       variables: {
-        id: "2",
-        username: "Yanti",
-        email: "yanti@mail.com",
-        password: "yanti123"
+        inputUser: {
+          id: "2",
+          username: "Yanti",
+          email: "yanti@mail.com",
+          password: "yanti123"
+        }
       }
     }))
     .end()

@@ -17,9 +17,6 @@ input inputUser {
 }
 type Mutation {
   createUser(
-    id: String
-    username: String!
-    email: String!
-    password: String!
+    input: inputUser
   ): User
 }

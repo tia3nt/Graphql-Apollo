@@ -16,16 +16,15 @@ const Query = {
 }
 
 const Mutation = {
-    createUser: (root, { id, username, email, password }) => {
-        
+    createUser: (root, { input } ) => {
         db.users.create({
-            id: id,
-            username: username,
-            email: email,
-            password: password
+            id: input.id,
+            username: input.username,
+            email: input.email,
+            password: input.password
         })
-
-        return db.users.get(id)
+       
+        return db.users.get(input.id)
     }
 }
 module.exports = { Query, Mutation }
